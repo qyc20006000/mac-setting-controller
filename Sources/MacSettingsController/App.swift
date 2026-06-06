@@ -101,11 +101,9 @@ struct MacSettingsControllerApp: App {
         let orderedBrowsers = preferredBrowsers + remainingBrowsers
         
         let menuIcon: Image
-        if let path = Bundle.main.path(forResource: "MenuIcon", ofType: "png"),
-           let nsImage = NSImage(contentsOfFile: path) {
-            // Keep the custom colors of the icon
-            nsImage.isTemplate = false
-            menuIcon = Image(nsImage: nsImage.resized(to: NSSize(width: 18, height: 18)))
+        if let defaultBrowser = state.defaultBrowser {
+            let icon = NSWorkspace.shared.icon(forFile: defaultBrowser.path).resized(to: NSSize(width: 18, height: 18))
+            menuIcon = Image(nsImage: icon)
         } else {
             menuIcon = Image(systemName: "slider.horizontal.3")
         }
